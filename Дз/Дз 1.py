@@ -7,6 +7,8 @@
 # age = int(input("Введіть ваш вік: "))
 # if age < 18:
 #     print("Вхід заборонено!")
+# elif age > 120:
+#     print("Ви ще живі?") # Це так... від мене
 # else:
 #     print("Вхід дозволено!")
 
@@ -14,6 +16,12 @@
 # import random
 # rand_num = random.randint(1, 10)
 # am = int(input("Яке число я загадав(від 1 до 10)? "))
+# if am > rand_num:
+#     print("Воно менше")
+# elif am < rand_num:
+#     print("Воно більше")
+# elif am == rand_num:
+#     print("Ура ви вгадали число")
 # while True:
 #     am = int(input("Спробуйте ще раз: "))
 #     if am > rand_num:
@@ -25,8 +33,8 @@
 #         break
 
 # Завдання 3_4
-# a = int(input("Введіть перше число:"))
-# b = int(input("Введіть друге число:"))
+# a = int(input("Введіть менше число:"))
+# b = int(input("Введіть більше число:"))
 
 # def print_numbers_between(a, b):
 #     for i in range(a+1, b):
