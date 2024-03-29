@@ -41,22 +41,58 @@
 # car1.model = 'sirvi'
 # car1.year = '20/03/21'
 
-# print([car1.make],[car1.model],[car1.year])
+# print(f"{car1.make},{car1.model},{car1.year}")
 
 # Завдання 3
-class Employee:
-    name = ""
-    position = ""
-    salary = 0
+# class Employee:
+#     def __init__(self, name, position, salary):
+#         self.name = name
+#         self.position = position
+#         self.salary = salary
 
-people1 = Employee
-people1.name = "Bob"
-people1.position = "Maneger"
-people1.salary = 4000 # В доларах
+# people1 = Employee("Bob", "Manager", 4000)
+# people2 = Employee("Barbi", "Seller", 1500)
 
-people2 = Employee
-people2.name = "Barbi"
-people2.name = "Seller"
-people2.salary = 1500
+# print(f"Заробітна плата {people1.name}: {people1.salary}$")
+# print(f"Заробітна плата {people2.name}: {people2.salary}$")
 
-print()
+# Завдання 4 в мене тут помилок було капєєєц то нейросіть допомогла(Об'яснила як зробити математику)
+# class Rectangle:
+#     def __init__(self, width, height):
+#         self.width = width
+#         self.height = height
+
+#     def calculate_area(self):
+#         return self.width * self.height
+
+#     def calculate_perimeter(self):
+#         return (self.width + self.height) * 2
+
+# rectangle1 = Rectangle(5, 10)
+
+# print(f"Площа: {rectangle1.calculate_area()}")
+# print(f"Периметр: {rectangle1.calculate_perimeter()}")
+
+# Завдання 5
+# class Product:
+#     def __init__(self, name, price, quantity):
+#         self.name = name
+#         self.price = price
+#         self.quantity = quantity
+
+#     def calculate_total_price(self):
+#         return self.price * self.quantity
+    
+#     def display_info(self):
+#         print(f"Назва: ©{self.name}, Ціна: {self.price}$, Є в наявності: {self.quantity}шт.")
+        
+# computer1 = Product("MacBook-Pro", 1600, 15)
+
+# while True:
+#     inp = input("Введіть функцію: ")
+#     if inp == "info":
+#         computer1.display_info()
+#     if inp == "buy all":
+#         print(f"Ціна за 15 MacBook Pro: {computer1.calculate_total_price()}$")
+#     if inp == "exit":
+#         break
