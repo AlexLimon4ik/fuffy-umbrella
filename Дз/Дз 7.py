@@ -9,7 +9,7 @@ def validator(func):
 
 @validator
 def hehehe(url):
-    webbrowser.hehehe(url)
+    webbrowser.open(url)
 
 hehehe("https://www.youtube.com/shorts/eAaTVhxZEJk")
 
