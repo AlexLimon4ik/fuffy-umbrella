@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 import time
+import calendar
 import logging
 
 # Налаштування логування
@@ -8,6 +9,131 @@ logging.basicConfig(filename='logs.log', level=logging.INFO, format='%(asctime)s
 
 def log_action(action):
     logging.info(action)
+
+class Contact:
+    def __init__(self, name, id, online_status):
+        self.name = name
+        self.id = id
+        self.online_status = online_status
+
+def open_chat_with_contact(frame, time_frame, contact):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    tk.Label(frame, text=f"Чат з {contact.name} (ID: {contact.id})").pack()
+    chat_log = tk.Text(frame)
+    chat_log.pack()
+    message_entry = tk.Entry(frame)
+    message_entry.pack()
+    tk.Button(frame, text="Надіслати", command=lambda: chat_log.insert(tk.END, f"Ви: {message_entry.get()}\n")).pack()
+    tk.Button(frame, text="O", command=lambda: create_messenger_app(frame, time_frame)).pack(side='bottom')
+
+def create_messenger_app(frame, time_frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    names = ["Сашко", "Артем", "Данилко", "Маша", "Катерина", "Микола", "Петро", "Олег", "Яна", "Андрій"]
+    contacts = [Contact(name, i+1, random.choice([True, False])) for i, name in enumerate(names)]
+    for contact in contacts:
+        status = "Онлайн" if contact.online_status else "Офлайн"
+        tk.Button(frame, text=f"{contact.name} (ID: {contact.id}) - {status}", command=lambda contact=contact: open_chat_with_contact(frame, time_frame, contact)).pack()
+
+    tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
+
+def create_music_app(frame, time_frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    tk.Label(frame, text="Відтворення музики...").pack()
+    tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
+
+def create_calendar_app(frame, time_frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    year = 2024  # Змініть рік на потрібний вам
+    month = 5  # Травень
+    cal = calendar.month(year, month)
+
+    tk.Label(frame, text=cal, font=("Courier", 12)).pack()
+
+    tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
+
+
+def create_weather_app(frame, time_frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    weather_conditions = ["Сонячно", "Хмарно", "Дощ", "Сніг", "Туманно"]
+    days_of_week = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"]
+
+    for day in days_of_week:
+        weather = random.choice(weather_conditions)
+        temperature = random.randint(-10, 30)
+        tk.Label(frame, text=f"{day}: {weather}, {temperature}°C").pack()
+
+    tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
+
+class Note:
+    def __init__(self, id, content):
+        self.id = id
+        self.content = content
+
+def create_notes_app(frame, time_frame, notes):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    def add_note():
+        note_content = note_entry.get()
+        if note_content:
+            note_id = len(notes) + 1
+            notes.append(Note(note_id, note_content))
+            tk.Label(frame, text=f"Нотатка {note_id}: {note_content}").pack()
+            note_entry.delete(0, tk.END)
+
+    def delete_note():
+        note_id_to_delete = note_entry.get()
+        if note_id_to_delete:
+            note_id_to_delete = int(note_id_to_delete)
+            notes[:] = [note for note in notes if note.id != note_id_to_delete]
+            create_notes_app(frame, time_frame, notes)
+
+    note_entry = tk.Entry(frame)
+    note_entry.pack()
+    tk.Button(frame, text="Додати нотатку", command=add_note).pack()
+    tk.Button(frame, text="Видалити нотатку за ID", command=delete_note).pack()
+
+    for note in notes:
+        tk.Label(frame, text=f"Нотатка {note.id}: {note.content}").pack()
+
+    tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
+
+def create_calculator_app(frame, time_frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    time_frame.pack_forget()
+
+    def evaluate(event):
+        try:
+            result = eval(entry.get())
+            label.config(text = "Результат: " + str(result))
+        except:
+            label.config(text = "Неправильний вираз")
+
+    entry = tk.Entry(frame)
+    entry.bind("<Return>", evaluate)
+    entry.pack(side='top')
+
+    label = tk.Label(frame)
+    label.pack(side='top')
+
+    tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
 
 def create_app_window(app_name, frame, time_frame):
     log_action(f"Відкрито додаток {app_name}")
@@ -127,7 +253,9 @@ def create_app_window(app_name, frame, time_frame):
             frame.after(1000, update_time)
         update_time()
         tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
-
+    elif app_name == "Netflix":
+        tk.Label(frame, text="Йди краще книжку почитай").pack()
+        tk.Button(frame, text="O", command=lambda: create_phone_simulator(frame, time_frame)).pack(side='bottom')
 
 def create_button(frame, text, command, app_name, time_frame):
     button = tk.Button(frame, text=text, command=command, bg='white', fg='black', width=8, height=4)
@@ -176,7 +304,15 @@ def create_phone_simulator(frame=None, time_frame=None):
     create_button(apps_frame, "💣", lambda: create_app_window("Minesweeper", apps_frame, time_frame), "Minesweeper", time_frame)
     create_button(apps_frame, "🍕", lambda: create_app_window("Pizza Maker", apps_frame, time_frame), "Pizza Maker", time_frame)
     create_button(apps_frame, "⏱️", lambda: create_app_window("Clock", apps_frame, time_frame), "Clock", time_frame)
-
+    create_button(apps_frame, "💬", lambda: create_messenger_app(apps_frame, time_frame), "Messenger", time_frame)
+    create_button(apps_frame, "N", lambda: create_app_window("Netflix", apps_frame, time_frame), "Netflix", time_frame)
+    create_button(apps_frame, "🎵", lambda: create_music_app(apps_frame, time_frame), "Music", time_frame)
+    create_button(apps_frame, "📅", lambda: create_calendar_app(apps_frame, time_frame), "Calendar", time_frame)
+    create_button(apps_frame, "☀️", lambda: create_weather_app(apps_frame, time_frame), "Weather", time_frame)
+    notes = []
+    create_button(apps_frame, "📝", lambda: create_notes_app(apps_frame, time_frame, notes), "Notes", time_frame)
+    create_button(apps_frame, "=", lambda: create_calculator_app(apps_frame, time_frame), "Calculator", time_frame)
+    
     # Додайте більше кнопок тут...
 
     if 'root' in locals():
